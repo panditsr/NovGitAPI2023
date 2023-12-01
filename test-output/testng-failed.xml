@@ -5,8 +5,7 @@
     <classes>
       <class name="com.nov30.test.github.AllgithubTests">
         <methods>
-          <include name="createTheRepoWithExistingName"/>
-          <include name="getAllRecords"/>
+          <include name="UpdateTheRepositoryName"/>
         </methods>
       </class> <!-- com.nov30.test.github.AllgithubTests -->
     </classes>

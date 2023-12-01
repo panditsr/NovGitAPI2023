@@ -18,7 +18,9 @@ import io.restassured.http.ContentType;
 import io.restassured.http.Header;
 import io.restassured.module.jsv.JsonSchemaValidator;
 import io.restassured.response.Response;
+import io.restassured.response.ValidatableResponseOptions;
 
+import com.nov30.models.requests.createDataPOJO;
 public class AllgithubTests {
    
 	
@@ -26,7 +28,7 @@ public class AllgithubTests {
 		public void getAllRecords	() {
 			RestAssured.baseURI="https://api.github.com/";
 			
-			String token = "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";
+			String token = "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";
 			//List<GetAlluserPOJO> listofuser =RestAssured
 			Response res =RestAssured		
 			.given()
@@ -34,6 +36,7 @@ public class AllgithubTests {
 			.header("Authorization", "Bearer " + token)
 			.when()
 			.get("/user/repos");
+			//System.out.println("total number of records="+ res.size());
 			//.get("/user/repos").as(new TypeRef<List<GetAlluserPOJO>>() {});
 			//System.out.println("total number of records="+ listofuser.size())
 			//res.then().body(JsonSchemaValidator.matchesJsonSchemaInClasspath("getallreporesponseSchema.json"));
@@ -49,7 +52,7 @@ public class AllgithubTests {
 			
 			RestAssured.baseURI="https://api.github.com/";
 			
-			String token = "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";
+			String token = "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";
 			
 			Response res =RestAssured		
 			.given()
@@ -71,7 +74,7 @@ public class AllgithubTests {
 			
 			RestAssured.baseURI="https://api.github.com/";
 			
-			String token = "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";
+			String token = "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";
 			
 			Response res =RestAssured		
 			.given()
@@ -90,24 +93,31 @@ public class AllgithubTests {
 		  
 		  RestAssured.baseURI="https://api.github.com/";
 			
-			String token = "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";
-			 String requestBody = "{\n" +
+			String token = "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";
+			
+			createDataPOJO createdata=new createDataPOJO();
+			createdata.setName("Hello-World4");
+			createdata.setDescription("This is your first repo!");
+			createdata.setHomepage("https://github.com");
+			createdata.setPrivate("false");
+			
+			/* String requestBody = "{\n" +
 		                "    \"name\": \"Hello-World2\",\n" +
 		                "    \"description\": \"This is your first repo!\",\n" +
 		                "    \"homepage\": \"https://github.com\",\n" +
 		                "    \"private\": false\n" +
-		                "}";
+		                "}"; */
 			Response res =RestAssured		
 			.given()
 			.contentType(ContentType.JSON)
 			.header("Authorization", "Bearer " + token)
-			.body(requestBody)
+			.body(createdata)
 			.when()
 			.post("/user/repos");
 			
 			res.then()
 	           .statusCode(201)
-	           .body("name", equalTo("Hello-World2"))
+	           .body("name", equalTo("Hello-World4"))
 	           .body("owner.login", equalTo("panditsr"))
 	           .body("owner.type", equalTo("User"));
 			   
@@ -119,26 +129,33 @@ public class AllgithubTests {
 		  
 		RestAssured.baseURI="https://api.github.com/";
 		
-		String token = "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";
-		 String requestBody = "{\n" +
+		String token = "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";
+		
+		createDataPOJO createdata=new createDataPOJO();
+		createdata.setName("Hello-World2");
+		createdata.setDescription("This is your first repo!");
+		createdata.setHomepage("https://github.com");
+		createdata.setPrivate("false");
+		
+		/* String requestBody = "{\n" +
 	                "    \"name\": \"Hello-World2\",\n" +
 	                "    \"description\": \"This is your first repo!\",\n" +
 	                "    \"homepage\": \"https://github.com\",\n" +
 	                "    \"private\": false\n" +
-	                "}";
+	                "}";  */
 		Response res =RestAssured		
 		.given()
 		.contentType(ContentType.JSON)
 		.header("Authorization", "Bearer " + token)
-		.body(requestBody)
+		.body(createdata)
 		.when()
 		.post("/user/repos");
 			
 		 res.then()
 	    .statusCode(422) 
-	    //.body("errors.message", equalTo("<[name already exists on this account]>"));
-		 .body("errors", equalTo("name already exists on this account"));
-	     //res.prettyPrint();
+	    //.extract.path("errors.message", equalTo("<[name already exists on this account]>"));
+		 .body("errors.message", equalTo("name already exists on this account"));
+	     res.prettyPrint();
 	}
 	
 	@Test
@@ -147,24 +164,32 @@ public class AllgithubTests {
 		  
 		  RestAssured.baseURI="https://api.github.com/";
 			
-			String token = "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";
-			String requestBody="{\"name\": \"HELLO-API1\",\r\n"
+			String token = "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";
+			
+			createDataPOJO createdata=new createDataPOJO();
+			
+			createdata.setName("HELLO-API2");
+			createdata.setDescription("my repository created using apis after update");
+			createdata.setPrivate("false");
+			
+			
+		/*	String requestBody="{\"name\": \"HELLO-API1\",\r\n"
 					+ "\"description\": \"my repository created using apis after update\",\r\n"
 					+ "\"private\": \"False\"}";
-			
+			*/
 			
 			Response res =RestAssured
 			
 			.given()
 			.contentType(ContentType.JSON)
 			.header("Authorization", "Bearer " + token)
-			.body(requestBody)
+			.body(createdata)
 			.when()
-			.patch("/repos/panditsr/Hello-world2");
+			.patch("/repos/panditsr/Hello-World3");
 			
 			res.then()
 	         .statusCode(200)
-	         .body("name", equalTo("HELLO-API1"));
+	         .body("name", equalTo("HELLO-API2"));
 	         
 			   
 			
@@ -177,7 +202,7 @@ public class AllgithubTests {
 			
 			RestAssured.baseURI="https://api.github.com/";
 			
-			String token = "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";
+			String token = "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";
 			
 			Response res =RestAssured
 			
@@ -201,7 +226,7 @@ public class AllgithubTests {
 			
 			RestAssured.baseURI="https://api.github.com/";
 			
-			String token = "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";
+			String token = "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";
 			
 			Response res =RestAssured
 			
